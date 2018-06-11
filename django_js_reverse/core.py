@@ -83,8 +83,11 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
         # if we have inner_ns_path, reconstruct a new resolver so that we can
         # handle regex substitutions within the regex of a namespace.
         if inner_ns_path:
-            inner_urlresolver = urlresolvers.get_ns_resolver(inner_ns_path,
-                                                             inner_urlresolver)
+            inner_urlresolver = urlresolvers.get_ns_resolver(
+                inner_ns_path,
+                inner_urlresolver,
+                tuple(inner_urlresolver.pattern.converters.items())
+            )
             inner_ns_path = ''
 
         for x in prepare_url_list(inner_urlresolver, inner_ns_path, inner_ns):
